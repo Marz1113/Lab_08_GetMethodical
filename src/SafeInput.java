@@ -152,4 +152,94 @@ public class SafeInput {
 
         return retVal;
     }
+
+
+    /**
+     * gets a double from the user via the console within a specified range
+     *
+     * @param pipe the scanner to use for input
+     * @param prompt the prompt to tell the user what is required
+     * @param low the inclusive low bound
+     * @param high the inclusive high bound
+     * @return a double within the specified range
+     */
+
+
+    public static double getRangedDouble(Scanner pipe, String prompt, double low, double high)
+    {
+        double retVal = 0;
+        boolean done = false;
+        String trash = "";
+
+        do
+        {
+            System.out.print(prompt + "[" + low + " - " + high + "]: ");
+            if(pipe.hasNextDouble())
+            {
+                retVal = pipe.nextDouble();
+                pipe.nextLine();
+                if(retVal >= low && retVal <= high)
+                {
+                    done = true;
+                }
+                else
+                {
+                    System.out.println("you must enter a value within the range [" + low + " - " + high + "]: ");
+                }
+            }
+            else
+            {
+                trash = pipe.nextLine();
+                System.out.println("you must enter a valid double and not " + trash);
+            }
+
+        } while(!done);
+
+        return retVal;
+    }
+
+
+    /**
+     * Gets a Yes or No from the user and returns the equivalent true or false
+     *
+     * @param pipe scanner to use for input
+     * @param prompt tells the user what to enter
+     * @return true or false
+     */
+
+    public static boolean getYNConfirm(Scanner pipe, String prompt)
+    {
+        String YNResponse = "";
+        boolean retVal = false;
+        boolean done = false;
+
+        do {
+            System.out.print(prompt + ": ");
+            YNResponse = pipe.nextLine();
+
+            if(YNResponse.matches("[YyNn]"))
+            {
+                System.out.println("must enter [Y/N]: ");
+
+            }
+            else
+            {
+                done = true;
+                switch (YNResponse)
+                {
+                    case "Y":
+                    case "y":
+                        retVal = true;
+                        break;
+                    case "N":
+                    case "n":
+                        retVal = false;
+                        break;
+                }
+            }
+
+        } while(!done);
+
+        return retVal;
+    }
 }
